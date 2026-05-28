@@ -23,7 +23,6 @@ export default function InputField({
   return (
     <div className="flex flex-col gap-1">
       <div className="ig-input-wrapper">
-        {/* Floating label input */}
         <div
           className={`
             relative border rounded-[3px] bg-[#FAFAFA] transition-all duration-150
@@ -33,23 +32,13 @@ export default function InputField({
           <input
             {...props}
             type={inputType}
-            placeholder=" "
+            placeholder={label}
             className={`
-              peer w-full px-3 pt-4 pb-1.5 text-sm bg-transparent outline-none
+              w-full px-3 py-3 text-sm bg-transparent outline-none placeholder:text-[#8E8E8E]
               ${isPassword ? "pr-16" : "pr-3"}
               ${className}
             `}
           />
-          <label
-            className="
-              absolute left-3 top-1/2 -translate-y-1/2 text-[#8E8E8E] text-xs pointer-events-none
-              transition-all duration-150
-              peer-focus:top-2.5 peer-focus:translate-y-0 peer-focus:text-[10px]
-              peer-[:not(:placeholder-shown)]:top-2.5 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-[10px]
-            "
-          >
-            {label}
-          </label>
 
           {isPassword && (
             <button

@@ -79,7 +79,7 @@ export default function SignupForm({ onSwitchToLogin }: SignupFormProps) {
           id: authData.user.id,
           nome: formData.nome!.trim(),
           email: formData.email,
-          senha: formData.senha,
+          cor_favorita: formData.senha!.trim(),
         });
 
         if (profileError && !profileError.message.includes("duplicate")) {
@@ -119,7 +119,10 @@ export default function SignupForm({ onSwitchToLogin }: SignupFormProps) {
   }
 
   const isFormFilled =
-    formData.nome && formData.email && formData.senha && formData.confirmarSenha;
+    formData.nome &&
+    formData.email &&
+    formData.senha &&
+    formData.confirmarSenha;
 
   return (
     <form
@@ -159,12 +162,12 @@ export default function SignupForm({ onSwitchToLogin }: SignupFormProps) {
       />
 
       <InputField
-        label="Senha"
-        isPassword
+        label="senha"
+        type="text"
         value={formData.senha}
         onChange={handleChange("senha")}
         error={errors.senha}
-        autoComplete="new-password"
+        autoComplete="off"
       />
 
       <InputField

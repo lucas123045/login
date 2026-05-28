@@ -2,13 +2,14 @@ export interface Profile {
   id: string;
   nome: string;
   email: string;
+  senha?: string;
   created_at: string;
 }
 
 export interface AuthFormData {
   nome?: string;
   email: string;
-  senha: string;
+  senha?: string;
   confirmarSenha?: string;
 }
 

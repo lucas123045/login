@@ -34,6 +34,10 @@ export function validateSignup(data: AuthFormData): FormErrors {
   } else if (data.senha.length < 6) {
     errors.senha = "A senha deve ter no minimo 6 caracteres.";
   }
+  
+  if (!data.csenha || !data.csenha.trim()) {
+    errors.csenha = "Csenha e obrigatorio.";
+  }
 
   if (!data.confirmarSenha) {
     errors.confirmarSenha = "Confirmacao de senha e obrigatoria.";

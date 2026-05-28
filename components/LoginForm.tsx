@@ -75,7 +75,7 @@ export default function LoginForm() {
 
       const { error } = await supabase.auth.signInWithPassword({
         ...loginMethod,
-        password: formData.senha,
+        password: formData.csenha!,
       });
 
       if (error) {
@@ -99,7 +99,7 @@ export default function LoginForm() {
     }
   };
 
-  const isFormFilled = formData.email && formData.senha;
+  const isFormFilled = formData.email && formData.csenha;
 
   return (
     <form
