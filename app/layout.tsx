@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "InstaClone — Entre ou cadastre-se",
+  title: "Instagram — Entre ou cadastre-se",
   description: "Conecte-se com amigos e compartilhe momentos.",
 };
 
