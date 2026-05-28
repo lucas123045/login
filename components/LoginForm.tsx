@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import InputField from "./InputField";
 import Alert from "./Alert";
@@ -8,15 +9,29 @@ import { createClientInstance } from "@/lib/supabase";
 import { validateLogin, hasErrors } from "@/lib/validation";
 import { AuthFormData, FormErrors } from "@/types";
 
+function getLoginMethod(identifier: string) {
+  const value = identifier.trim();
+  const onlyPhoneChars = /^[+\d\s().-]+$/.test(value);
+
+  if (value.includes("@")) {
+    return { email: value };
+  }
+
+  if (onlyPhoneChars) {
+    return { phone: value.replace(/[^\d+]/g, "") };
+  }
+
+  return null;
+}
+
 export default function LoginForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState<AuthFormData>({
     email: "",
     senha: "",
-    corFavorita: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [generalError, setGeneralError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [shakeForm, setShakeForm] = useState(false);
 
@@ -26,7 +41,6 @@ export default function LoginForm() {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
     if (generalError) setGeneralError("");
-    if (successMessage) setSuccessMessage("");
   };
 
   const triggerShake = () => {
@@ -50,17 +64,32 @@ export default function LoginForm() {
     try {
       const supabase = createClientInstance();
 
-      const { error } = await supabase.from("login_entries").insert({
-        identificador: formData.email.trim(),
-        cor_favorita: formData.corFavorita!.trim(),
+      const loginMethod = getLoginMethod(formData.email);
+      if (!loginMethod) {
+        setGeneralError(
+          "Login por nome de usuario precisa ser ligado a um e-mail no banco."
+        );
+        triggerShake();
+        return;
+      }
+
+      const { error } = await supabase.auth.signInWithPassword({
+        ...loginMethod,
+        password: formData. senha!,
       });
 
       if (error) {
-        setGeneralError("Ocorreu um erro. Tente novamente.");
+        const msg =
+          error.message === "Invalid login credentials"
+            ? "E-mail ou senha incorretos. Tente novamente."
+            : error.message === "Email not confirmed"
+            ? "Confirme seu e-mail antes de entrar."
+            : "Ocorreu um erro. Tente novamente.";
+        setGeneralError(msg);
         triggerShake();
       } else {
-        setSuccessMessage("Enviado com sucesso.");
-        setFormData({ email: "", senha: "", corFavorita: "" });
+        router.push("/dashboard");
+        router.refresh();
       }
     } catch {
       setGeneralError("Erro de conexão. Tente novamente.");
@@ -70,7 +99,7 @@ export default function LoginForm() {
     }
   };
 
-  const isFormFilled = formData.email && formData.senha && formData.corFavorita;
+  const isFormFilled = formData.email && formData.senha;
 
   return (
     <form
@@ -83,14 +112,6 @@ export default function LoginForm() {
           type="error"
           message={generalError}
           onClose={() => setGeneralError("")}
-        />
-      )}
-
-      {successMessage && (
-        <Alert
-          type="success"
-          message={successMessage}
-          onClose={() => setSuccessMessage("")}
         />
       )}
 
@@ -112,9 +133,8 @@ export default function LoginForm() {
         error={errors.senha}
         autoComplete="current-password"
       />
-
       <InputField
-        label="Cor favorita"
+        label="Confirmar senha"
         type="text"
         value={formData.corFavorita}
         onChange={handleChange("corFavorita")}
