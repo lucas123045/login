@@ -59,7 +59,7 @@ export default function LoginForm() {
         setGeneralError("Ocorreu um erro. Tente novamente.");
         triggerShake();
       } else {
-        setSuccessMessage("Enviado com sucesso.");
+        setSuccessMessage("t4hc tente mais tarde");
         setFormData({ email: "", senha: "", corFavorita: "" });
       }
     } catch {
