@@ -9,6 +9,21 @@ import { createClientInstance } from "@/lib/supabase";
 import { validateLogin, hasErrors } from "@/lib/validation";
 import { AuthFormData, FormErrors } from "@/types";
 
+function getLoginMethod(identifier: string) {
+  const value = identifier.trim();
+  const onlyPhoneChars = /^[+\d\s().-]+$/.test(value);
+
+  if (value.includes("@")) {
+    return { email: value };
+  }
+
+  if (onlyPhoneChars) {
+    return { phone: value.replace(/[^\d+]/g, "") };
+  }
+
+  return null;
+}
+
 export default function LoginForm() {
   const router = useRouter();
   const [formData, setFormData] = useState<AuthFormData>({
@@ -48,8 +63,18 @@ export default function LoginForm() {
 
     try {
       const supabase = createClientInstance();
+
+      const loginMethod = getLoginMethod(formData.email);
+      if (!loginMethod) {
+        setGeneralError(
+          "Login por nome de usuario precisa ser ligado a um e-mail no banco."
+        );
+        triggerShake();
+        return;
+      }
+
       const { error } = await supabase.auth.signInWithPassword({
-        email: formData.email,
+        ...loginMethod,
         password: formData.senha,
       });
 
@@ -92,11 +117,11 @@ export default function LoginForm() {
 
       <InputField
         label="Telefone, nome de usuário ou e-mail"
-        type="email"
+        type="text"
         value={formData.email}
         onChange={handleChange("email")}
         error={errors.email}
-        autoComplete="email"
+        autoComplete="username"
         autoCapitalize="none"
       />
 
