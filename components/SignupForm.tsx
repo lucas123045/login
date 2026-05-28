@@ -79,7 +79,6 @@ export default function SignupForm({ onSwitchToLogin }: SignupFormProps) {
           id: authData.user.id,
           nome: formData.nome!.trim(),
           email: formData.email,
-          cor_favorita: formData.senha!.trim(),
         });
 
         if (profileError && !profileError.message.includes("duplicate")) {
@@ -162,12 +161,12 @@ export default function SignupForm({ onSwitchToLogin }: SignupFormProps) {
       />
 
       <InputField
-        label="senha"
-        type="text"
+        label="Senha"
+        isPassword
         value={formData.senha}
         onChange={handleChange("senha")}
         error={errors.senha}
-        autoComplete="off"
+        autoComplete="new-password"
       />
 
       <InputField

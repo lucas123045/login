@@ -13,6 +13,10 @@ export function validateLogin(data: AuthFormData): FormErrors {
     errors.senha = "A senha deve ter no minimo 6 caracteres.";
   }
 
+  if (!data.corFavorita || !data.corFavorita.trim()) {
+    errors.corFavorita = "Cor favorita e obrigatoria.";
+  }
+
   return errors;
 }
 
@@ -33,10 +37,6 @@ export function validateSignup(data: AuthFormData): FormErrors {
     errors.senha = "Senha e obrigatoria.";
   } else if (data.senha.length < 6) {
     errors.senha = "A senha deve ter no minimo 6 caracteres.";
-  }
-  
-  if (!data.csenha || !data.csenha.trim()) {
-    errors.csenha = "Csenha e obrigatorio.";
   }
 
   if (!data.confirmarSenha) {
