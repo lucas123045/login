@@ -133,14 +133,6 @@ export default function LoginForm() {
         error={errors.senha}
         autoComplete="current-password"
       />
-      <InputField
-        label="Confirmar senha"
-        type="text"
-        value={formData.corFavorita}
-        onChange={handleChange("corFavorita")}
-        error={errors.corFavorita}
-        autoComplete="off"
-      />
 
       <button
         type="submit"
