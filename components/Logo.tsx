@@ -10,7 +10,7 @@ export default function InstagramLogo({
       className={`font-logo text-[${size}px] leading-none tracking-tight ${className}`}
       style={{ fontFamily: "'Grand Hotel', cursive", fontSize: size }}
     >
-      InstaClone
+      Instagram
     </h1>
   );
 }

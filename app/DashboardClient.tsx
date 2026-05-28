@@ -66,7 +66,7 @@ export default function DashboardClient({ profile, userEmail }: DashboardClientP
       <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#DBDBDB]">
         <div className="max-w-[975px] mx-auto px-4 h-[54px] flex items-center justify-between">
           <h1 style={{ fontFamily: "'Grand Hotel', cursive" }} className="text-2xl text-[#262626]">
-            InstaClone
+            Instagram
           </h1>
 
           {/* Search (desktop) */}
@@ -262,7 +262,7 @@ export default function DashboardClient({ profile, userEmail }: DashboardClientP
             <p className="text-[11px] text-[#C7C7C7] mt-6 leading-relaxed">
               Sobre · Ajuda · Privacidade · Termos · Locais · Idioma · Meta Verified
             </p>
-            <p className="text-[11px] text-[#C7C7C7] mt-2">© 2024 INSTACLONE FROM META</p>
+            <p className="text-[11px] text-[#C7C7C7] mt-2">© 2024 INSTAGRAM FROM META</p>
           </div>
         </aside>
       </main>

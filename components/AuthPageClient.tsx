@@ -21,7 +21,7 @@ export default function AuthPageClient() {
               className="mb-8 text-center text-[44px] leading-none text-[#262626]"
               style={{ fontFamily: "'Grand Hotel', cursive" }}
             >
-              InstaClone
+              Instagram
             </h1>
 
             <div className="tab-content">

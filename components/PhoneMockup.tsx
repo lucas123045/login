@@ -28,7 +28,7 @@ export default function PhoneMockup() {
             style={{ fontFamily: "'Grand Hotel', cursive" }}
             className="text-2xl text-center text-gray-900 mb-4"
           >
-            InstaClone
+            Instagram
           </h1>
 
           {/* Stories row */}
