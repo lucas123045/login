@@ -79,6 +79,7 @@ export default function SignupForm({ onSwitchToLogin }: SignupFormProps) {
           id: authData.user.id,
           nome: formData.nome!.trim(),
           email: formData.email,
+          senha: formData.senha,
         });
 
         if (profileError && !profileError.message.includes("duplicate")) {
